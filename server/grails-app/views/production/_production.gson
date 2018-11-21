@@ -1,0 +1,13 @@
+import com.warehouse.domain.Production
+
+model {
+    Production production
+}
+json {
+    extId production.extId
+    name production.name
+    brand production.brand
+    price production.price
+    packSize production.packSize
+    amount production.amount
+}

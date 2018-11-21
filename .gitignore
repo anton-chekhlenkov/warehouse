@@ -31,3 +31,22 @@
 
 # "temporary" build files
 /target
+
+*~
+.gradle
+.env
+npm-debug.log
+Thumbs.db
+.DS_Store
+.gradle
+.idea
+build/
+out/
+.idea
+*.iml
+*.ipr
+*.iws
+.project
+.settings
+.classpath
+*~
