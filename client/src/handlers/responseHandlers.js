@@ -2,7 +2,7 @@ import Auth from '../security/auth';
 
 
 export const checkResponseStatus = (response) => {
-    if(response.status >= 200 && response.status < 300) {
+    if (response.status >= 200 && response.status < 300) {
         return response.json()
     } else {
         let error = new Error(response.statusText);
@@ -14,7 +14,7 @@ export const checkResponseStatus = (response) => {
 export const loginResponseHandler = (response, handler) => {
     Auth.logIn(response);
 
-    if(handler) {
+    if (handler) {
         handler.call();
     }
 };

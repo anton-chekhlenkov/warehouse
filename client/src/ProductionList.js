@@ -11,7 +11,7 @@ class ProductionList extends React.Component {
                 <td>{productionItem.extId}</td>
                 <td>{productionItem.name}</td>
                 <td>{productionItem.brand}</td>
-                <td>${(productionItem.price/100).toFixed(2)}</td>
+                <td>${(productionItem.price / 100).toFixed(2)}</td>
                 <td>{productionItem.packSize}</td>
                 <td>{productionItem.amount}</td>
             </tr>);

@@ -1,7 +1,7 @@
 export const defaultErrorHandler = (error, handler) => {
     console.error(error);
 
-    if(handler) {
+    if (handler) {
         handler.call();
     }
 };
