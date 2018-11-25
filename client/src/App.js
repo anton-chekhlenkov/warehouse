@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {Grid} from 'react-bootstrap';
-import Production from './Production';
+import {Button, Grid} from 'react-bootstrap';
+import ProductionList from './ProductionList';
 import Auth from './security/auth'
 import Login from './Login';
 import {defaultErrorHandler} from './handlers/errorHandlers';
 import {checkResponseStatus, loginResponseHandler} from './handlers/responseHandlers';
 import {SERVER_URL} from './config';
 import 'whatwg-fetch';
+import ProductionForm from "./ProductionForm";
 
 class App extends Component {
 
@@ -37,7 +38,7 @@ class App extends Component {
     componentDidMount() {
         (async () => {
             if (await Auth.loggedIn()) {
-                this.setState({route: 'production'})
+                this.setState({route: 'productionList'})
             } else {
                 this.setState({route: 'login'})
             }
@@ -76,7 +77,7 @@ class App extends Component {
     };
 
     customLoginHandler = () => {
-        this.setState({route: 'production'});
+        this.setState({route: 'productionList'});
     };
 
     customErrorHandler = (error) => {
@@ -89,21 +90,30 @@ class App extends Component {
         this.reset();
     };
 
+    changeRouteHandler = (route) => {
+        return () => {
+            this.setState({route: route});
+        }
+    }
+
+
     contentForRoute() {
         const {error, userDetails, route} = this.state;
 
-        const loginContent = <Login error={error}
-                                    userDetails={userDetails}
-                                    inputChangeHandler={this.inputChangeHandler}
-                                    onSubmit={this.login}/>;
+        const routeHandlers = {
+            routeHome: this.changeRouteHandler('productionList'),
+            routeProductionAdd: this.changeRouteHandler('productionAdd')
+        }
 
-        const productionContent = <Production logoutHandler={this.logoutHandler}/>;
 
         switch (route) {
             case 'login':
-                return loginContent;
-            case 'production':
-                return productionContent;
+                return <Login error={error} userDetails={userDetails} inputChangeHandler={this.inputChangeHandler}
+                                 onSubmit={this.login}/>;
+            case 'productionList':
+                return <ProductionList routeHandlers={routeHandlers} />;
+            case 'productionAdd':
+                return <ProductionForm routeHandlers={routeHandlers} />;
             default:
                 return <p>Loading...</p>;
         }
@@ -114,7 +124,17 @@ class App extends Component {
 
         return (
             <Grid>
-                {content}
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        <h2>Welcome to warehouse.com
+                            {Auth.loggedIn() ? <Button bsStyle="warning" className="pull-right" onClick={this.logoutHandler}>Log Out</Button> : null}
+                        </h2>
+                    </div>  
+                    <div className="panel-body">
+                        {content}
+                    </div>
+
+                </div>
             </Grid>
         );
     };

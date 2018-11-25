@@ -1,14 +1,10 @@
 import React from 'react';
-import {Jumbotron, Row, Col, Form, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
+import {Row, Col, Form, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
 
 const Login = ({userDetails, error, inputChangeHandler, onSubmit}) => {
 
     return (
         <Row>
-            <Jumbotron>
-                <h2>Welcome to warehouse.com</h2>
-            </Jumbotron>
-            <Row>
                 <Col sm={4} smOffset={4}>
 
                     {error ? <p className="alert alert-danger">{error} </p> : null}
@@ -28,7 +24,6 @@ const Login = ({userDetails, error, inputChangeHandler, onSubmit}) => {
                         </FormGroup>
                     </Form>
                 </Col>
-            </Row>
         </Row>
     );
 };
