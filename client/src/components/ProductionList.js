@@ -1,7 +1,7 @@
 import React from 'react';
 import {Row, Button, Table} from 'react-bootstrap';
-import {SERVER_URL} from './config';
-import headers from './security/headers';
+import {SERVER_URL} from '../config';
+import headers from '../security/headers';
 import 'whatwg-fetch';
 
 class ProductionList extends React.Component {
@@ -53,10 +53,9 @@ class ProductionList extends React.Component {
                         </tr>
                         </thead>
                         <tbody>
-                            {list.map(renderProductionItem)}
+                        {list.map(renderProductionItem)}
                         </tbody>
                     </Table>
-                        <Button className="btn" onClick={this.props.routeHandlers.routeProductionAdd}>Add item</Button>
                 </div>
             </Row>
         </Row>;
