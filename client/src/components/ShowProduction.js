@@ -1,10 +1,10 @@
 import React from 'react';
-import {Row, Button, Table} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 import {SERVER_URL} from '../config';
 import headers from '../security/headers';
 import 'whatwg-fetch';
 
-class ProductionList extends React.Component {
+class ShowProduction extends React.Component {
 
     state = {
         list: []
@@ -34,28 +34,22 @@ class ProductionList extends React.Component {
             </tr>);
         };
 
-        return <Row>
-            <Row>
-                <div>
-                    <Table striped bordered condensed hover>
-                        <thead>
-                        <tr>
-                            <th>External ID</th>
-                            <th>Name</th>
-                            <th>Brand</th>
-                            <th>Price</th>
-                            <th>Pack size</th>
-                            <th>Amount</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {list.map(renderProductionItem)}
-                        </tbody>
-                    </Table>
-                </div>
-            </Row>
-        </Row>;
+        return <Table striped bordered condensed hover>
+            <thead>
+            <tr>
+                <th>External ID</th>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Pack size</th>
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            {list.map(renderProductionItem)}
+            </tbody>
+        </Table>;
     }
 }
 
-export default ProductionList;
+export default ShowProduction;

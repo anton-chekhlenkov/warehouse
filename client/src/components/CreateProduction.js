@@ -1,5 +1,4 @@
 import React from 'react';
-import {func} from 'prop-types';
 import {ControlLabel, Form, FormControl} from "react-bootstrap";
 import {SERVER_URL} from '../config';
 import headers from '../security/headers';
@@ -15,24 +14,10 @@ class CreateProduction extends React.Component {
             packSize: '',
             amount: ''
         },
-        errors: []
+        result: []
     };
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-
-        // Check fields
-        var emptyFields = this.emptyFields()
-        if (emptyFields.length) {
-            this.setState({errors: emptyFields.map(val => `You should fill the field: ${val}`)});
-            return;
-        }
-
-        console.log("subm")
-        // Submit
-        this.submitProductionItem(this.state.productionItemData);
-
-        // Clear form
+    reset = () => {
         this.setState({
             productionItemData: {
                 extId: '',
@@ -42,7 +27,7 @@ class CreateProduction extends React.Component {
                 packSize: '',
                 amount: ''
             },
-            error: []
+            result: []
         });
     };
 
@@ -59,6 +44,41 @@ class CreateProduction extends React.Component {
         return empty
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+
+        // Check fields
+        var emptyFields = this.emptyFields()
+        if (emptyFields.length) {
+            this.setState({result: emptyFields.map(val => `You should fill the field: ${val}`)});
+            return;
+        }
+
+        // Submit
+        this.submitProductionItem(this.state.productionItemData);
+    };
+
+    handleSubmitError = (error) => {
+        this.setState({result: ['Unable to submit data to the server!']});
+        console.error('Unable to submit data to the server', error);
+    }
+
+    handleSubmitResponse = (response) => {
+        console.log(response)
+        console.log(response.message)
+        console.log(response.error)
+
+        if (response.error) {
+            console.error('Unable to save production', response.message);
+            this.setState({result: [`Unable to save the production item! Code: {pesponse.error} Cause: {response.message}`]});
+        } else {
+            this.reset()
+            this.setState({result: ['The production item was successfully saved']})
+        }
+
+
+    }
+
 
     submitProductionItem = (data) => {
         fetch(`${SERVER_URL}/api/production`, {
@@ -66,12 +86,9 @@ class CreateProduction extends React.Component {
             headers: headers(),
             body: JSON.stringify(data)
         }).then(r => r.json())
-            .catch(ex => {
-                this.setState({errors: ['Unable to save production item: ' + ex]});
-                console.error('Unable to save production', ex);
-            });
+            .then(response => this.handleSubmitResponse(response))
+            .catch(error => this.handleSubmitError(error));
     };
-
 
     handleChange = (event) => {
         var productionItemData = this.state.productionItemData;
@@ -81,13 +98,13 @@ class CreateProduction extends React.Component {
 
     render() {
 
-        function renderError(error) {
-            return (<p className="alert alert-danger" key={error}>{error}</p>);
+        function renderResult(result) {
+            return (<p className="alert alert-warning" key={result}>{result}</p>);
         };
 
         return (
             <div>
-                {this.state.errors.map(renderError)}
+                {this.state.result.map(renderResult)}
 
                 <Form className="form" onSubmit={this.handleSubmit}>
 

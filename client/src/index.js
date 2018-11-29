@@ -6,7 +6,7 @@ import './css/main.css';
 import {BrowserRouter as Router, Link, Redirect, Route, withRouter} from "react-router-dom";
 import {Switch} from 'react-router';
 import CreateProduction from './components/CreateProduction';
-import ProductionList from './components/ProductionList';
+import ShowProduction from './components/ShowProduction';
 import Login from './components/Login';
 import Auth from "./security/auth";
 import {Button, Col, Grid, Row} from "react-bootstrap";
@@ -75,17 +75,17 @@ const Root = () => (
                     </div>
                     <div className="panel-body">
                         <ul>
-                            <CustomLink path="/show" title="Show list" />
-                            <CustomLink path="/show" title="Show rest" />
-                            <CustomLink path="/create" title="Add new" />
+                            <CustomLink path="/show" title="Show all" />
+                            <CustomLink path="/rest" title="Show rest" />
+                            <CustomLink path="/create" title="Add" />
                         </ul>
 
                         <Col sm={10} smOffset={1}>
                             <Switch>
-                                <PrivateRoute exact path="/" component={ProductionList}/>
+                                <PrivateRoute exact path="/" component={ShowProduction}/>
                                 <Route path="/login" component={Login}/>
-                                <PrivateRoute path="/show" component={ProductionList}/>
-                                <PrivateRoute path="/rest" component={ProductionList}/>
+                                <PrivateRoute path="/show" component={ShowProduction}/>
+                                <PrivateRoute path="/rest" component={ShowProduction}/>
                                 <PrivateRoute path="/create" component={CreateProduction}/>
                                 <Route component={Error404}/>
                             </Switch>
