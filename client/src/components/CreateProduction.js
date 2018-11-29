@@ -1,40 +1,38 @@
 import React from 'react';
 import {func} from 'prop-types';
-import {ControlLabel, Form, FormControl, Button} from "react-bootstrap";
+import {ControlLabel, Form, FormControl} from "react-bootstrap";
 import {SERVER_URL} from '../config';
 import headers from '../security/headers';
 
-class ProductionForm extends React.Component {
+class CreateProduction extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            productionItemData: {
-                extId: '',
-                name: '',
-                brand: '',
-                price: '',
-                packSize: '',
-                amount: ''
-            },
-            errors: []
-        };
-    }
+    state = {
+        productionItemData: {
+            extId: '',
+            name: '',
+            brand: '',
+            price: '',
+            packSize: '',
+            amount: ''
+        },
+        errors: []
+    };
 
     handleSubmit = (event) => {
-
         event.preventDefault();
 
-        // Check necessarily fields
+        // Check fields
         var emptyFields = this.emptyFields()
         if (emptyFields.length) {
-            this.setState({
-                errors: emptyFields.map(val => `You should fill the field: ${val}`)
-            });
+            this.setState({errors: emptyFields.map(val => `You should fill the field: ${val}`)});
             return;
         }
 
+        console.log("subm")
+        // Submit
         this.submitProductionItem(this.state.productionItemData);
+
+        // Clear form
         this.setState({
             productionItemData: {
                 extId: '',
@@ -49,11 +47,11 @@ class ProductionForm extends React.Component {
     };
 
     emptyFields = () => {
-        var target = this.state.productionItemData
+        let {productionItemData} = this.state
         var empty = []
-        for (var property in target) {
-            if (target.hasOwnProperty(property)) {
-                if (!target[property]) {
+        for (var property in productionItemData) {
+            if (productionItemData.hasOwnProperty(property)) {
+                if (!productionItemData[property]) {
                     empty.push(property);
                 }
             }
@@ -69,7 +67,7 @@ class ProductionForm extends React.Component {
             body: JSON.stringify(data)
         }).then(r => r.json())
             .catch(ex => {
-                this.setState({errors: ['Unable to save production: ' + ex]});
+                this.setState({errors: ['Unable to save production item: ' + ex]});
                 console.error('Unable to save production', ex);
             });
     };
@@ -89,34 +87,32 @@ class ProductionForm extends React.Component {
 
         return (
             <div>
-
                 {this.state.errors.map(renderError)}
 
                 <Form className="form" onSubmit={this.handleSubmit}>
 
-                    <ControlLabel>ExtId</ControlLabel>
+                    <ControlLabel>External ID</ControlLabel>
                     <FormControl className="form-control" type='text' name='extId'
                                  value={this.state.productionItemData.extId} onChange={this.handleChange}/>
-
 
                     <ControlLabel>Name</ControlLabel>
                     <FormControl className="form-control" type='text' name='name'
                                  value={this.state.productionItemData.name} onChange={this.handleChange}/>
 
 
-                    <ControlLabel>brand</ControlLabel>
+                    <ControlLabel>Brand</ControlLabel>
                     <FormControl className="form-control" type='text' name='brand'
                                  value={this.state.productionItemData.brand} onChange={this.handleChange}/>
 
-                    <ControlLabel>price</ControlLabel>
+                    <ControlLabel>Price</ControlLabel>
                     <FormControl className="form-control" type='text' name='price'
                                  value={this.state.productionItemData.price} onChange={this.handleChange}/>
 
-                    <ControlLabel>packSize</ControlLabel>
+                    <ControlLabel>Pack size</ControlLabel>
                     <FormControl className="form-control" type='text' name='packSize'
                                  value={this.state.productionItemData.packSize} onChange={this.handleChange}/>
 
-                    <ControlLabel>amount</ControlLabel>
+                    <ControlLabel>Amount</ControlLabel>
                     <FormControl className="form-control" type='text' name='amount'
                                  value={this.state.productionItemData.amount} onChange={this.handleChange}/>
                     <br/>
@@ -128,4 +124,4 @@ class ProductionForm extends React.Component {
     }
 }
 
-export default ProductionForm;
+export default CreateProduction;

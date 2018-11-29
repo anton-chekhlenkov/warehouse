@@ -5,7 +5,7 @@ import './css/grails.css';
 import './css/main.css';
 import {BrowserRouter as Router, Link, Redirect, Route, withRouter} from "react-router-dom";
 import {Switch} from 'react-router';
-import ProductionForm from './components/ProductionForm';
+import CreateProduction from './components/CreateProduction';
 import ProductionList from './components/ProductionList';
 import Login from './components/Login';
 import Auth from "./security/auth";
@@ -13,7 +13,6 @@ import {Button, Col, Grid, Row} from "react-bootstrap";
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Error404 from "./components/Error404";
-import App from "./App";
 
 
 const AuthButtons = withRouter(
@@ -49,6 +48,14 @@ function PrivateRoute({component: Component, ...rest}) {
     );
 }
 
+function CustomLink({path, title}) {
+    return (
+        <li style={{display: 'inline', margin: 5}}>
+            <Link to={path} className="btn btn-outline-secondary">{title}</Link>
+        </li>
+    )
+}
+
 const Root = () => (
     <Router>
         <div>
@@ -68,22 +75,21 @@ const Root = () => (
                     </div>
                     <div className="panel-body">
                         <ul>
-                            <li style={{display: 'inline', margin: 5}}>
-                                <Link to="/show" className="btn btn-outline-secondary">Show list</Link></li>
-                            <li style={{display: 'inline', margin: 5}}>
-                                <Link to="/rest" className="btn btn-outline-secondary">Show rest</Link></li>
-                            <li style={{display: 'inline', margin: 5}}>
-                                <Link to="/create" className="btn btn-outline-secondary">Add new</Link></li>
+                            <CustomLink path="/show" title="Show list" />
+                            <CustomLink path="/show" title="Show rest" />
+                            <CustomLink path="/create" title="Add new" />
                         </ul>
 
-                        <Switch>
-                            <PrivateRoute exact path="/" component={ProductionList}/>
-                            <Route path="/login" component={Login}/>
-                            <PrivateRoute path="/show" component={ProductionList}/>
-                            <PrivateRoute path="/rest" component={ProductionList}/>
-                            <PrivateRoute path="/create" component={ProductionForm}/>
-                            <Route component={Error404}/>
-                        </Switch>
+                        <Col sm={10} smOffset={1}>
+                            <Switch>
+                                <PrivateRoute exact path="/" component={ProductionList}/>
+                                <Route path="/login" component={Login}/>
+                                <PrivateRoute path="/show" component={ProductionList}/>
+                                <PrivateRoute path="/rest" component={ProductionList}/>
+                                <PrivateRoute path="/create" component={CreateProduction}/>
+                                <Route component={Error404}/>
+                            </Switch>
+                        </Col>
                     </div>
 
                 </div>

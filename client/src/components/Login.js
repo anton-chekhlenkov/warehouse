@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, ControlLabel, Form, FormControl, FormGroup, Row} from 'react-bootstrap';
+import {Button, Col, Form, FormControl, FormGroup, Row} from 'react-bootstrap';
 
 import {Redirect} from "react-router-dom";
 import {SERVER_URL} from "../config";
@@ -70,13 +70,10 @@ class Login extends React.Component {
 
         return (
             <Row>
-                <Col sm={8} smOffset={4}>
+                <Col sm={5} smOffset={3}>
                     {from.pathname !== '/' ?
-                        <p>Please <b>login</b> to view the page: <code>{from.pathname}</code></p> :
+                        <p>Please login to view the page: <code>{from.pathname}</code></p> :
                         <p>Enter your <b>username</b> and <b>password</b></p>}
-                </Col>
-
-                <Col sm={4} smOffset={4}>
 
                     {this.state.error ? <p className="alert alert-danger">{this.state.error} </p> : null}
 

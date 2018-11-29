@@ -6,12 +6,8 @@ import 'whatwg-fetch';
 
 class ProductionList extends React.Component {
 
-    constructor() {
-        super();
-
-        this.state = {
-            list: []
-        }
+    state = {
+        list: []
     }
 
     componentDidMount() {
