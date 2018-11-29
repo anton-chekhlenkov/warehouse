@@ -82,7 +82,7 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: none
+            dbCreate: create-drop
             url: jdbc:postgresql://localhost:5432/warehouse
             driverClassName: org.postgresql.Driver
             dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -204,10 +204,10 @@ grails:
 ---
 system:
     initialization:
-        enabled: false
+        enabled: true
     admin:
         login: admin@warehouse.com
         password: QsXghT
-    user:
+    customer:
         login: user@warehouse.com
         password: 123qwe

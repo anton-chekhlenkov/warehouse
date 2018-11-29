@@ -21,7 +21,11 @@ class Production {
     Integer amount
 
     static constraints = {
-
+        extId nullable: false, blank: false, unique: true
+        name nullable: false, blank: false
+        brand nullable: false, blank: false
+        price nullable: false, blank: false
+        packSize nullable: false, blank: false
     }
 
 }

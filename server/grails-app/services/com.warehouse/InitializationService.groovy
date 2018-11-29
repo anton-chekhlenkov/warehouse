@@ -16,7 +16,7 @@ class InitializationService {
 
         initRoles()
         initAdmin()
-        initFirstUser()
+        initCustomer()
 
         log.info "Application system data initialized"
     }
@@ -55,15 +55,15 @@ class InitializationService {
         }
     }
 
-    private def initFirstUser() {
-        def login = Holders.config.system.user.login
-        def password = Holders.config.system.user.password
+    private def initCustomer() {
+        def login = Holders.config.system.customer.login
+        def password = Holders.config.system.customer.password
 
         if (!User.findByUsername(login)) {
             def user = new User(username: login, enabled: true, accountLocked: false, password: password)
             def savedUser = userService.createUser(user, Authority.ROLE_USER)
             if (savedUser.hasErrors()) {
-                log.info("Test user was not created")
+                log.info("Customer was not created")
                 savedUser.errors.each { log.error(it) }
             }
 
