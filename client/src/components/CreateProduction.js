@@ -2,6 +2,7 @@ import React from 'react';
 import {ControlLabel, Form, FormControl} from "react-bootstrap";
 import {SERVER_URL} from '../config';
 import headers from '../security/headers';
+import {checkResponseStatus} from "../handlers/responseHandlers";
 
 class CreateProduction extends React.Component {
 
@@ -58,25 +59,14 @@ class CreateProduction extends React.Component {
         this.submitProductionItem(this.state.productionItemData);
     };
 
-    handleSubmitError = (error) => {
-        this.setState({result: ['Unable to submit data to the server!']});
-        console.error('Unable to submit data to the server', error);
+    handleSubmitError = (ex) => {
+        this.setState({result: ['Unable to submit data to the server! ' + ex]});
+        console.error('Unable to submit data to the server!', ex);
     }
 
-    handleSubmitResponse = (response) => {
-        console.log(response)
-        console.log(response.message)
-        console.log(response.error)
-
-        if (response.error) {
-            console.error('Unable to save production', response.message);
-            this.setState({result: [`Unable to save the production item! Code: {pesponse.error} Cause: {response.message}`]});
-        } else {
-            this.reset()
-            this.setState({result: ['The production item was successfully saved']})
-        }
-
-
+    handleSubmitSuccess = (response) => {
+        this.reset()
+        this.setState({result: ['The production item was successfully saved']})
     }
 
 
@@ -85,9 +75,9 @@ class CreateProduction extends React.Component {
             method: 'POST',
             headers: headers(),
             body: JSON.stringify(data)
-        }).then(r => r.json())
-            .then(response => this.handleSubmitResponse(response))
-            .catch(error => this.handleSubmitError(error));
+        }).then(checkResponseStatus)
+            .then(this.handleSubmitSuccess)
+            .catch(this.handleSubmitError);
     };
 
     handleChange = (event) => {

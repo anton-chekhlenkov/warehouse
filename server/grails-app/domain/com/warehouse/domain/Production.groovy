@@ -1,11 +1,5 @@
 package com.warehouse.domain
 
-
-import grails.plugin.springsecurity.annotation.Secured
-import grails.rest.Resource
-
-@Secured(['ROLE_USER', 'ROLE_ADMIN'])
-@Resource(uri = '/api/production')
 class Production {
 
     String extId
@@ -19,6 +13,10 @@ class Production {
     Integer packSize
 
     Integer amount
+
+    static mapping = {
+        id generator: 'increment'
+    }
 
     static constraints = {
         extId nullable: false, blank: false, unique: true
