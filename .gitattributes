@@ -1,0 +1,15 @@
+gradle/*
+README.md
+gradlew
+gradlew.bat
+settings.gradle
+
+server/grails-wrapper.jar
+server/grailsw
+server/grailsw.bat
+
+client/src/css
+client/src/images
+client/package.json
+client/package-lock.json
+client/yarn.lock
