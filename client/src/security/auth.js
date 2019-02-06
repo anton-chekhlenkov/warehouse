@@ -36,7 +36,7 @@ export default {
 
     loggedIn() {
         return localStorage.auth && fetch(
-            `${SERVER_URL}/api/products`,
+            `${SERVER_URL}/api/production`,
             {headers: headers()})
             .then(checkResponseStatus)
             .then(() => {

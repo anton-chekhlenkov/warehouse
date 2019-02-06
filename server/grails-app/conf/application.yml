@@ -82,7 +82,7 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: create
+            dbCreate: update
             url: jdbc:postgresql://localhost:5432/warehouse
             driverClassName: org.postgresql.Driver
             dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -131,27 +131,28 @@ grails:
                     -
                         pattern: /assets/**
                         filters: none
-                    -
-                        pattern: /**/js/**
-                        filters: none
-                    -
-                        pattern: /**/css/**
-                        filters: none
-                    -
-                        pattern: /**/images/**
-                        filters: none
-                    -
-                        pattern: /**/favicon.ico
-                        filters: none
-                    -
-                        pattern: /**
-                        filters: JOINED_FILTERS
-                    - # Stateless chain
-                        pattern: /api/**
-                        filters: JOINED_FILTERS,-anonymousAuthenticationFilter,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter
+#                    -
+#                        pattern: /**/js/**
+#                        filters: none
+#                    -
+#                        pattern: /**/css/**
+#                        filters: none
+#                    -
+#                        pattern: /**/images/**
+#                        filters: none
+#                    -
+#                        pattern: /**/favicon.ico
+#                        filters: none
+#                    -
+#                        pattern: /**
+#                        filters: JOINED_FILTERS
+#                    - # Stateless chain
+#                        pattern: /api/**
+#                        filters: JOINED_FILTERS,-anonymousAuthenticationFilter,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter
                     - # Traditional chain
                         pattern: /**
-                        filters: JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter
+#                            filters: JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter
+                        filters: none
             controllerAnnotations:
                 staticRules:
                     -
@@ -178,14 +179,14 @@ grails:
                         pattern: /assets/**
                         access:
                             - permitAll
-                    -
-                        pattern: /**/js/**
-                        access:
-                            - permitAll
-                    -
-                        pattern: /**/css/**
-                        access:
-                            - permitAll
+#                    -
+#                        pattern: /**/js/**
+#                        access:
+#                            - permitAll
+#                    -
+#                        pattern: /**/css/**
+#                        access:
+#                            - permitAll
                     -
                         pattern: /**/images/**
                         access:
@@ -195,9 +196,18 @@ grails:
                         access:
                             - permitAll
                     -
-                        pattern: /login/auth
+                        pattern: /assets/images/favicon.ico
+                        access:
+                        - permitAll
+                    -
+                        pattern: /api/**
                         access:
                             - permitAll
+                    -
+                        pattern: /**
+                        access:
+                        - permitAll
+
         databasemigration:
             updateOnStart: true
             updateOnStartFileName: changelog.groovy

@@ -11,9 +11,14 @@ class UrlMappings {
         patch "/$controller/$id(.$format)?"(action:"patch")
 
 
-        "/api/production"(resources: "production")
-//        "/api/production/rest"(controller: "production", action: "rest")
+        "/api/production"(resources: "production") {
+            collection {
+                '/rest'(controller: 'production', action: 'rest')
+            }
+        }
+        // доступны оба адреса при этом
 
+//        "/api/production/rest"(controller: "production", action: "rest")
 
         "/"(controller: 'application', action:'index')
         "500"(view: '/error')

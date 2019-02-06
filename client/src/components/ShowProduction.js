@@ -13,7 +13,12 @@ class ShowProduction extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${SERVER_URL}/api/production`, {
+
+        // fetch(`${SERVER_URL}/api/production?max=100`, {
+            fetch(`${SERVER_URL}/api/production/rest`, {
+            //     fetch(`${SERVER_URL}/api/production?max=10&offset=12`, {
+        // fetch(`${SERVER_URL}/api/production?max=100&amount=lte:5`, {
+        //     fetch(`${SERVER_URL}/api/production?max=100&filter={"Brand":"Avon"}`, {
             method: 'GET',
             headers: headers(),
         })
